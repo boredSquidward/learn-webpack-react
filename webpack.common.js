@@ -2,16 +2,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-  mode: "development",
-  entry: "./index.js",
+  entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-  },
-  devtool: "inline-source-map",
-  devServer: {
-    open: true,
-    port: 8080,
+    filename: "bundle.[hash].js",
+    clean: true,
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -19,20 +14,20 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-      {
         test: /\.jsx?$/i,
         exclude: /node_modules/,
         use: ["babel-loader"],
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg|webp)$/i,
+        type: "asset/resource",
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: "learn-webpack-react",
-      template: "./index.html",
+      template: "./src/index.html",
     }),
   ],
 };
